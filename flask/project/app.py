@@ -6,7 +6,7 @@
 from flask import Flask
 from flask import render_template
 import pygal
-from pygal import Config    
+from pygal import Config
 from datetime import datetime
 import json
 from pygal import style
@@ -17,13 +17,14 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     """configuracao do grafico"""
-    with open("leituras-%s.json" %datetime.today().strftime("%d-%m-%Y"), 'r') as file:  
+    with open("leituras-%s.json" %datetime.today().strftime("%d-%m-%Y"), 'r')as file:
 
         info = json.load(file)
-        grafico = pygal.Bar( interpolate='cubic', style=style.BlueStyle(
+        grafico = pygal.Bar(interpolate='cubic', style=style.BlueStyle(
                   value_font_family='googlefont:Raleway',
-                  value_font_size=30,
-                  value_colors=('black',)), print_values=True, print_values_position='top')
+                  value_font_size=30, value_colors=('black',)),
+                  print_values=True,
+                  print_values_position='top')
         temperatura = [x['temperatura'] for x in info]
         grafico.x_labels = [x['horario'] for x in info]
         grafico.add("Temperatura", temperatura)
