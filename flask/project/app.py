@@ -16,8 +16,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    """configuracao do grafico"""
-    with open("leituras-%s.json" %datetime.today().strftime("%d-%m-%Y"), 'r')as file:
+    """Configuracao do grafico"""
+    with open("leituras-{}.json".format(
+              datetime.today().strftime("%d-%m-%Y")), 'r') as file:
 
         info = json.load(file)
         grafico = pygal.Bar(interpolate='cubic', style=style.BlueStyle(
@@ -25,13 +26,14 @@ def home():
                   value_font_size=30, value_colors=('black',)),
                   print_values=True,
                   print_values_position='top')
+        grafico = pygal.Bar()
         temperatura = [x['temperatura'] for x in info]
         grafico.x_labels = [x['horario'] for x in info]
         grafico.add("Temperatura", temperatura)
         grafico.render_to_file('static/images/grafico.svg')
+        grafico.render_to_png('static/images/grafico.png')
         url_img = 'static/images/grafico.svg'
-
-
         return render_template('flask.html', image_url=url_img)
+
 if __name__ == "__main__":
     app.run()
