@@ -1,0 +1,93 @@
+{% extends "iot_layout.html" %} {% block conteudo %}
+
+<div class=container>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../static/css/daterangepicker.css" />
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/js/moment.min.js"></script>
+    <script type="text/javascript" src="../static/js/pt-br.js"></script>
+
+    <script type="text/javascript" src="../static/js/daterangepicker.js"></script>
+    <script>
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY'
+                }
+            });
+        });
+    </script>
+    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 4%">
+        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+        <span></span> <b class="caret"></b>
+    </div>
+
+    <script>
+        $(function() {
+
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#reportrange').Daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                startDate: start,
+                endDate: end,
+            }, cb);
+
+            cb(start, end);
+
+        });
+
+        $('#reportrange').daterangepicker();
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+            console.log(picker.startDate.format('DD-MM-YYYY'));
+            console.log(picker.endDate.format('DD-MM-YYYY'));
+        });
+
+
+        $(function() {
+
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#reportrange').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                startDate: start,
+                endDate: end,
+            }, cb);
+
+            cb(start, end);
+
+        });
+
+        $('#reportrange').daterangepicker();
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+            console.log(picker.startDate.format('DD-MM-YYYY'));
+            console.log(picker.endDate.format('DD-MM-YYYY'));
+        });
+    </script>
+    <h1 class="text-center">Monitoramento da Temperatura em Tempo Real</h1>
+    <div class="col-12">
+        <embed type="image/svg+xml" src={{grafico|safe}} style='max-width:100%' />
+    </div>
+
+
+
+    {% endblock %}

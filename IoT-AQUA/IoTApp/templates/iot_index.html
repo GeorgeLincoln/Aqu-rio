@@ -1,0 +1,21 @@
+{% extends "iot_layout.html" %}
+{% block conteudo %}
+
+  <div class="py-5 text-center opaque-overlay bg-primary site-banner">
+    <div class="py-5">
+      <div class="row">
+        <div class="col-md-12 text-white">
+          <h1 class="display-3 mb-4">IoT-AQUA</h1>
+          <p class="lead mb-5">Sistema Inteligente de Monitoramento de Aquários </p>
+          <a href="{{url_for('aquario')}}" class="btn btn-lg mx-1 btn-secondary">Aquário</a>
+          <a href="{{url_for('dashboard')}}" class="btn btn-lg btn-primary mx-1">Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+
+
+
